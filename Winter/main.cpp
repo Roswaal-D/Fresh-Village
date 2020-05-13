@@ -209,25 +209,26 @@ void direct() {
 	
 	tem[0] = map[0];
 	for (int i = 1;i < k;i++) {
-		jcount[tim][0][0]++;
+		
 		tem[i] = 2000;
 	}
 	for (int i = 1;i < k;i++) {
-		jcount[tim][0][0]++;
+		
 		int aim = 0;
 		for (int j = 0;j < k;j++) {
-			jcount[tim][0][0]+=2;
+			jcount[tim][1][0]++;
 			if (map[i] < tem[j]) {
 				aim = j;
 				break;
 			}
 		}
 		for (int x = i;x > aim;x--) {
-			jcount[tim][0][0]++;
+			
 			tem[x] = tem[x - 1];
 			jcount[tim][1][1]++;
 		}
 		tem[aim] = map[i];
+		jcount[tim][1][1]++;
 	}
 }
 //—°‘Ò≈≈–Ú
@@ -312,19 +313,16 @@ void heap(int st) {
 }
 //øÏÀŸ≈≈–Ú
 void quick(int le,int ri) {
-	jcount[tim][5][0]++;
 	if (le < ri) {
-		
 		int x = le;
 		int y = ri;
 		int temp = map[le];
 		while (x < y) {
-			jcount[tim][5][0]++;
 			while (y > x&& map[y] > temp) {
 				y--;
-				jcount[tim][5][0] += 2;
+				jcount[tim][5][0] ++;
 			}
-			jcount[tim][5][0]++;
+			
 			if (x < y) {
 				map[x] = map[y];
 				x++;
@@ -333,9 +331,9 @@ void quick(int le,int ri) {
 			}
 			while (x < y && map[x] <= temp) {
 				x++;
-				jcount[tim][5][0] += 2;
+				jcount[tim][5][0] ++;
 			}
-			jcount[tim][5][0]++;
+			
 			if (x < y) {
 				map[y] = map[x];
 				y--;
@@ -355,7 +353,7 @@ void mix(int l, int mid, int r)
 	int i = l;int j = mid;
 	while (i < mid && j <= r)
 	{
-		jcount[tim][6][0]+=3;
+		jcount[tim][6][0]++;
 		jcount[tim][6][1]++;
 		if (map[i] <= map[j]) {
 			tem[k++] = map[i++];
@@ -366,23 +364,22 @@ void mix(int l, int mid, int r)
 			
 	}
 	while (j <= r) { 
-		jcount[tim][6][0]++;
+		
 		jcount[tim][6][1]++;
 		tem[k++] = map[j++]; 
 	}
 	while (i < mid) {
-		jcount[tim][6][0]++;
+		
 		jcount[tim][6][1]++;
 		tem[k++] = map[i++];
 	}
 	for (int i = l;i <= r;i++) {
-		jcount[tim][6][0]++;
+		
 		jcount[tim][6][1]++;
 		map[i] = tem[i - l];
 	}
 }
 void merge(int start, int end) {
-	jcount[tim][6][0]++;
 	if (start == end) {
 		return;
 	}
