@@ -10,7 +10,7 @@
 #include <cmath>
 
 using namespace  std;
-int* map, k = 0, kn = 0, * tem, * bf, com = 0, move = 0;
+int* map, k = -1, kn = 0, * tem, * bf, com = 0, move = 0;
 double jcount[100][7][2] = { 0 }, sum[7][2] = { 0 }, varz[7][2] = { 0 };
 string rows = "+----------+----------+----------+----------+----------+----------+----------+----------+",
 	   row1 = "|          | 冒泡排序 | 直接排序 | 选择排序 | 箱子排序 |  堆排序  | 快速排序 | 归并排序 |",
@@ -388,12 +388,44 @@ void merge(int start, int end) {
 	merge(mid + 1, end);
 	mix(start, mid + 1, end);
 }
+int inint() {
+	string temin="";
+	cin >> temin;
+	bool is = true;
+	for (int i = 0;i < temin.length();i++) {
+		if (temin[i] > '9' || temin[i] < '0')
+			is = false;
+	}
+	if (!is) {
+		cout << "请输入整数:";
+		return inint();
+	}
+	else {
+		int res = atoi(temin.c_str());
+		return res;
+	}
+}
+void ink() {
+	k = inint();
+	if (k < 100) {
+		cout << "输入应不小于100:";
+		ink();
+	}
+}
 int main() {
 	cout << "Input:" << endl;
-	cout << "请输入一个大于100的整数作为测试随机数组长度:";
-	cin >> k;
+	
+	cout << "请输入一个不小于100的整数作为测试随机数组长度:";
+	ink();
+	
 	cout << "请输入测试数据组数:";
-	cin >> kn;
+	kn = inint();
+
+	cout << endl;
+	cout << "即将开始长为 " << k << " 随机数组的 " << kn << " 次排序测试" << endl;
+	cout << endl;
+	Sleep(5000);
+
 	//添加不定长数组
 	map = new int[k];
 	Random(map, k, 0, 1000, false);
