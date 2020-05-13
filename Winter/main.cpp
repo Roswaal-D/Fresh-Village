@@ -97,12 +97,12 @@ void prt(double aim[7][2]) {
 	cout << rows << endl;
 }
 //方差输出
-string toit(int a,int b) {
+string toit(int a,int b, double ai[7][2]) {
 
-	if (abs(varz[a][b] - 0) < 1e-4) {
+	if (abs(ai[a][b] - 0) < 1e-4) {
 		return "0.00";
 	}
-	int aim = varz[a][b] * 100;
+	int aim = ai[a][b] * 100;
 	string ti = to_string(aim);
 	int l = ti.length();
 	string fin = "";
@@ -115,14 +115,14 @@ string toit(int a,int b) {
 	}
 	return fin;
 }
-void prt() {
+void prtd(double aim[7][2]) {
 	string em = " ";
 	cout << rowsf << endl;
 	cout << row1f << endl;
 	cout << rowsf << endl;
 	cout << row2f;
 	for (int i = 0;i < 7;i++) {
-		string now = toit(i,0);
+		string now = toit(i,0,aim);
 		int rlength = now.length();
 		int yv = 10 > rlength ? 10 - rlength : 0;
 		int byv = yv / 2;
@@ -139,7 +139,7 @@ void prt() {
 	cout << rowsf << endl;
 	cout << row3f;
 	for (int i = 0;i < 7;i++) {
-		string now = toit(i,1);
+		string now = toit(i,1,aim);
 		int rlength = now.length();
 		int yv = 10 > rlength ? 10 - rlength : 0;
 		int byv = yv / 2;
@@ -441,12 +441,12 @@ int main() {
 			//tem[i] = map[i];
 			bf[i] = map[i];
 		}
-		buble();renew();
-		direct();renew();
-		select();renew();
-		box();renew();
-		heap(k-1);renew();
-		quick(0, k - 1);renew();
+		buble();			renew();
+		direct();			renew();
+		select();			renew();
+		box();				renew();
+		heap(k-1);			renew();
+		quick(0, k - 1);	renew();
 		merge(0, k - 1);
 		t1.join();
 		cout << "第" << (i + 1) << "次测试结果：" << endl;
@@ -463,8 +463,11 @@ int main() {
 		cout << endl;*/
 		update();
 	}
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
 	cout << kn << "次测试平均结果：" << endl;
-	prt(sum);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
+	prtd(sum);
 
 	for (int i = 0;i < 7;i++) {
 		for (int j = 0;j < 2;j++) {
@@ -473,8 +476,10 @@ int main() {
 			}
 		}
 	}
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
 	cout << "方差统计" << endl;
-	prt();
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	prtd(varz);
 
 	cout << "End" << endl;
 	free(map);
