@@ -1,6 +1,6 @@
 ﻿  main.cpp
-C:\Users\86130\Source\Repos\Winter\Winter\main.cpp(43,10): warning C4244: “参数”: 从“double”转换到“DWORD”，可能丢失数据
-C:\Users\86130\Source\Repos\Winter\Winter\main.cpp(105,10): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-C:\Users\86130\Source\Repos\Winter\Winter\main.cpp(163,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
-C:\Users\86130\Source\Repos\Winter\Winter\main.cpp(395,19): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\86130\Source\Repos\Winter\Winter\main.cpp(54,10): warning C4244: “参数”: 从“double”转换到“DWORD”，可能丢失数据
+C:\Users\86130\Source\Repos\Winter\Winter\main.cpp(116,10): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+C:\Users\86130\Source\Repos\Winter\Winter\main.cpp(244,12): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+C:\Users\86130\Source\Repos\Winter\Winter\main.cpp(476,19): warning C4018: “<”: 有符号/无符号不匹配
   Winter.vcxproj -> C:\Users\86130\Source\Repos\Winter\Debug\Winter.exe

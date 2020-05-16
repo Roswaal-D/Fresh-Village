@@ -8,6 +8,7 @@
 #include <windows.h>
 #include <string>
 #include <cmath>
+#include <algorithm>
 
 using namespace  std;
 int* map, k = -1, kn = 0, * tem, * bf, com = 0, move = 0;
@@ -20,6 +21,16 @@ string rows = "+----------+----------+----------+----------+----------+---------
 	   row1f = "|              | 冒泡排序 | 直接排序 | 选择排序 | 箱子排序 |  堆排序  | 快速排序 | 归并排序 |",
 	   row2f = "| 比较次数方差 |",
 	   row3f = "| 移动次数方差 |";
+	   
+
+string sx[] = { "   冒泡排序   ","   直接排序   ","   选择排序   ","   箱子排序   ","    堆排序    ","   快速排序   ","   归并排序   " },
+	   frank[5][7],
+	   rar[4] = { "+---+--------------+--------------+--------------+",
+				  "|   | 比较次数排名 | 移动次数排名 |  总次数排名  |",
+				  "+---+--------------+--------------+",
+				  "|   | 比较次数排名 | 移动次数排名 |" };
+
+string str1 = "", str2 = "";
 
 int jbox[1001],tim=0;
 
@@ -155,8 +166,78 @@ void prtd(double aim[7][2]) {
 	cout << endl;
 	cout << rowsf << endl;
 }
+//排名输出-conclusion
+void rrank(double org[7],int c) {
+	bool mark[7] = { 0 };
+	double order[7];
+	for (int i = 0;i < 7;i++) {
+		order[i] = org[i];
+	}
+	sort(order,order+7);
+	for (int i = 0;i < 7;i++) {
+		for (int j = 0;j < 7;j++) {
+			if (order[i] == org[j]&&(!mark[j])) {
+				frank[c][i] = sx[j];
+				mark[j] = true;
+				break;
+			}
+		}
+	}
+}
+void sran() {
+	double tem[7];
+	for (int i = 0;i < 7;i++) {
+		tem[i] = sum[i][0];
+	}
+	rrank(tem, 0);
+	for (int i = 0;i < 7;i++) {
+		tem[i] = sum[i][1];
+	}
+	rrank(tem, 1);
+	for (int i = 0;i < 7;i++) {
+		tem[i] = sum[i][1]+sum[i][0];
+	}
+	rrank(tem, 2);
+	for (int i = 0;i < 7;i++) {
+		tem[i] = varz[i][0];
+	}
+	rrank(tem, 3);
+	for (int i = 0;i < 7;i++) {
+		tem[i] = varz[i][1];
+	}
+	rrank(tem, 4);
+	str1 += rar[0] + "\n";
+	str1 += rar[1] + "\n";
+	str1 += rar[0] + "\n";
+	for (int i = 0;i < 7;i++) {
+		str1 += "| ";
+		char xh = '1'+i;
+		str1 += xh;
+		str1 += " |";
+		for (int j = 0;j < 3;j++) {
+			str1 += frank[j][i];
+			str1 += "|";
+		}
+		str1 += "\n";
+	}
+	str1 += rar[0] + "\n";
 
-
+	str2 += rar[2] + "\n";
+	str2 += rar[3] + "\n";
+	str2 += rar[2] + "\n";
+	for (int i = 0;i < 7;i++) {
+		str2 += "| ";
+		char xh = '1' + i;
+		str2 += xh;
+		str2 += " |";
+		for (int j = 3;j < 5;j++) {
+			str2 += frank[j][i];
+			str2 += "|";
+		}
+		str2 += "\n";
+	}
+	str2 += rar[2] + "\n";
+}
 //生成范围在l~r的n个随机数 
 void Random(int* a, int n, int l, int r,bool pf)
 {
@@ -424,7 +505,7 @@ int main() {
 	cout << endl;
 	cout << "即将开始长为 " << k << " 随机数组的 " << kn << " 次排序测试" << endl;
 	cout << endl;
-	Sleep(5000);
+	Sleep(3000);
 
 	//添加不定长数组
 	map = new int[k];
@@ -451,6 +532,7 @@ int main() {
 		t1.join();
 		cout << "第" << (i + 1) << "次测试结果：" << endl;
 		prt(jcount[tim]);
+		//排序测试
 		/*cout << "初始数据:";
 		for (int j = 0;j < k;j++) {
 			cout << bf[j] << " ";
@@ -468,18 +550,29 @@ int main() {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 
 	prtd(sum);
-
+	double force = pow(kn, 0.5);
 	for (int i = 0;i < 7;i++) {
 		for (int j = 0;j < 2;j++) {
 			for (int q = 0;q < kn;q++) {
-				varz[i][j] += pow((jcount[q][i][j] - sum[i][j]), 2) / kn;	
+				varz[i][j] += ((jcount[q][i][j] - sum[i][j]) / force)* ((jcount[q][i][j] - sum[i][j]) / force);
 			}
 		}
 	}
+	sran();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
-	cout << "方差统计" << endl;
+    cout << "平均结果排名(升序):" << endl;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	cout << str1;
+
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	cout << "稳定性(方差)统计:" << endl;
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 	prtd(varz);
+
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	cout << "稳定性排名(升序):" << endl;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+	cout << str2;
 
 	cout << "End" << endl;
 	free(map);
